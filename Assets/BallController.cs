@@ -4,6 +4,26 @@ public class NewMonoBehaviourScript : MonoBehaviour
 {
     public Rigidbody sphereRigidbody;
     public float ballSpeed = 2f; //ball speed doubled here
+    public float jumpPower = 5f;
+    public bool isGrounded = false;
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground")) // Make sure your ground object is tagged as "Ground"
+        {
+            isGrounded = true; //Allowed to jump!
+        }
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false; //Jumped!
+        }
+    }
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -36,9 +56,22 @@ public class NewMonoBehaviourScript : MonoBehaviour
             inputVector += Vector2.right;
         }
 
+        if(Input.GetKey(KeyCode.Space)) 
+        {
+            
+        }
+        
+        if (isGrounded)
+        {
+            // Example: Allow jumping only when grounded
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                sphereRigidbody.AddForce(Vector3.up * jumpPower, ForceMode.Impulse); //Jump!
+                
+            }
+        }
+
         Vector3 inputXZPlane = new Vector3(inputVector.x, 0, inputVector.y);
-        Debug.Log("Resultant Vector: " + inputVector);
-        Debug.Log("Resultant 3D Vector: " + inputXZPlane);
         sphereRigidbody.AddForce(inputXZPlane * ballSpeed);
     }
 }
