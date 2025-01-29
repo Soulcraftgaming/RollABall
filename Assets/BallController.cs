@@ -3,13 +3,13 @@ using UnityEngine;
 public class NewMonoBehaviourScript : MonoBehaviour
 {
     public Rigidbody sphereRigidbody;
-    public float ballSpeed = 2f; //ball speed doubled here
-    public float jumpPower = 5f;
+    public float ballSpeed = 2f; //ball speed doubled 
+    public float jumpPower = 5f; //jump power
     public bool isGrounded = false;
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground")) // Make sure your ground object is tagged as "Ground"
+        if (collision.gameObject.CompareTag("Ground")) //tagged plane as Ground
         {
             isGrounded = true; //Allowed to jump!
         }
